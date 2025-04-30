@@ -1,6 +1,6 @@
 # BLV Onboard Cutaway Mechanism Code
 # Originally written by Michael Pham and Ali Malik
-# Edited by Pragun Bethapudi and Vencionas Kosasih
+# Edited by Tri Do, Pragun Bethapudi and Vencionas Kosasih
 # Most recent editor: Vencionas Kosasih
 
 # import necessary libraries
@@ -40,7 +40,7 @@ rfm9x.receive_timeout=10
 rfm9x.enable_crc=True
 rfm9x.signal_bandwidth = 125000
 
-servo.angle=180
+servo.angle=0
 
 
 # ====================================================================================================
@@ -193,7 +193,7 @@ def gps_handler(gps_alt, gps_speed, gps_track_angle):
 
 def cut_away():
     print("Cutting!")
-    servo.angle = 0
+    servo.angle = 180
     rfm9x.send("Cut Away Initiated")
 
 def ping():
@@ -239,13 +239,14 @@ while True:
     rfm9x.send(gps_handler(gps_alt, gps_speed, gps_track_angle))
     msg = rfm9x.receive()
 
-    print(f"Message received: {msg} ; RSSI: {rfm9x.last_rssi}")
+    print(f"Message received: {msg} ; RSSI: {rfm9x.last_rssi} ; SNR {rfm9x.snr}")
 
     if msg is not None:
         cmd_handler(msg)
         # cutaway manual activation OR signal status OR gps status
-    if gps_alt == 31500:
-        cut_away()
+#     if gps_alt == 31500:
+#         cut_away()
         # cutaway automatic activation
 
     time.sleep(1)
+

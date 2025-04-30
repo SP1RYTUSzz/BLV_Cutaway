@@ -1,8 +1,6 @@
-# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
-# SPDX-License-Identifier: MIT
-
-# Simple demo of sending and recieving data with the RFM95 LoRa radio.
-# Author: Tony DiCola
+# Cutaway Ground Feather
+# by Michael Pham & Ali Malik
+# Edited by Tri Do
 import board
 import busio
 import digitalio
@@ -97,7 +95,7 @@ Enter your choice:
 
     if send_that_shit == "1":
         send_message(signal_status_message)
-    
+ 
     elif send_that_shit == "3":
         send_message(alt_status_message)
 
@@ -136,9 +134,11 @@ Enter your choice:
                 # Also read the RSSI (signal strength) of the last received message and
                 # print it.
             rssi = rfm9x.last_rssi
-            print("Received signal strength: {0} dB".format(rssi))
+            snr = rfm9x.last_snr
+            print("Received signal strength: {0} dB, SNR: {1} dB".format(rssi,snr))
 
             time.sleep(2)
+
 
 
 
